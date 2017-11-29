@@ -23,10 +23,9 @@ and WHAT YOU SHOULD WRITE is the sayHi function that makes the code above work:
   
 var names = ['Tyler', 'Cahlan', 'Ryan', 'Colt', 'Tyler', 'Blaine', 'Cahlan'];
 
-first(names, function(firstName){
-  console.log('The first name in names is ' + firstName);
-  return firstName;
-});
+var first = function(array,cb){
+  cb(array[0])
+};
 
 
 
@@ -35,11 +34,9 @@ first(names, function(firstName){
   //Code Here
 
 
-last(names, function(lastName){
-  console.log('The last name in names is ' + lastName);
-  return lastName;
-});
-
+var last = function(array,cb){
+  cb(array[array.length-1])
+}
 
 
 // 3. Write a function called multiply that takes in three parameters: two numbers and a callback function.  Invoke the callback, passing in the product of the two numbers multiplied as the argument. 
@@ -47,10 +44,9 @@ last(names, function(lastName){
   //Code Here
 
 
-multiply(4, 3, function(answer){
-  console.log('The answer is ' + answer); //should console.log 12
-})
-
+const multiply = function (num1,num2,cb){
+  cb(num1*num2)
+}
 
 
 // 4. Write a function called contains that takes in three parameters: an array, a name and a callback.  First, check if the name exists in the array. 
@@ -58,26 +54,25 @@ multiply(4, 3, function(answer){
 // If the name does not exist, invoke the callback with false as the argument.
 
   //Code Here 
-
-
-
-
-contains(names, 'Colt', function(result){
-  if(result === true){
-    console.log('Colt is in the array');
-  } else {
-    console.log('Colt is not in the array');
+const contains = function (array,name,cb){
+  for (var i = 0; i < array.length;i++){
+    if (array[i] === name ){
+      cb(true)
+    }else {
+      cb(false)
+    }
   }
-});
-
+};
 
 
 // 5. Write a function called uniq that takes in an array and a callback function.
 // Remove any duplicate values from the array, and invoke the callback with the modified array as an argument.
 
   //Code Here
-
-
+ let uniq = function (array,cb){
+  var uniqueNames = array.filter((e,i,self) => {return i === self.indexOf(e)});
+  return cb(uniqueNames)
+ };
 
 uniq(names, function(uniqArr){
   console.log('The new names array with all the duplicate items removed is ', uniqArr);
@@ -86,8 +81,11 @@ uniq(names, function(uniqArr){
 
 // 6. Write a function called each that takes in an array of names and a callback function. For each name in the array, invoke the callback and pass in the name and the name's index as arguments.
 
-    //Code Here 
 
+    //Code Here 
+let each = (names,cb) => {
+  names.filter((e,i) => cb(e,i))
+}
 
 
 each(names, function(item, indice){
@@ -100,7 +98,14 @@ each(names, function(item, indice){
 // When the correct user object is found, invoke the callback with the user object as an argument.
 
 // Code here
+let getUserById = (array,idd,cb) => {
+  for (var i = 0; i < array.length;i++){
+    if (array[i].id === idd) {
+      cb(array[i])
+    }
+  }
 
+}
 
 
 var users = [
